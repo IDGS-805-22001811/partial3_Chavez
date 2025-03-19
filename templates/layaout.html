@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escuela XYZ</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+    <header class="bg-blue-600 text-white py-4">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold">Escuela</h1>
+            <p class="text-sm">Educación de calidad para el futuro</p>
+        </div>
+    </header>
+
+    <nav class="bg-blue-500 text-white py-2">
+        <div class="container mx-auto px-4">
+            <ul class="flex space-x-4">
+                <li><a href="/index" class="hover:bg-blue-600 px-3 py-2 rounded">Inicio</a></li>
+                <li><a href="/crear_examen" class="hover:bg-blue-600 px-3 py-2 rounded">Crear Examen</a></li>
+                <li><a href="/realizar_examen" class="hover:bg-blue-600 px-3 py-2 rounded">Realizar examen</a></li>
+                <li><a href="/alumno" class="hover:bg-blue-600 px-3 py-2 rounded">Alumno</a></li>
+                <li><a href="/calificaciones" class="hover:bg-blue-600 px-3 py-2 rounded">Calificaciones</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container mx-auto px-4 py-6">
+        {% block container %} {% endblock %}
+    </div>
+
+</body>
+
+</html>

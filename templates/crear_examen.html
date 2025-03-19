@@ -1,0 +1,40 @@
+{% extends "layaout.html" %} {% block container %}
+<div class="container">
+    <div class="max-w-sm mx-auto">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Crear Examen</h2>
+    </div>
+    <form method="POST" action="{{ url_for('crear_examen') }}">
+        {{ form.hidden_tag() }}
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                {{ form.pregunta.label(class="block mb-2 text-sm font-medium text-gray-900 dark:text-white") }} {{ form.pregunta(class="form-control w-full p-2 border border-black rounded") }}
+            </div>
+        </div>
+
+        {% for field in [form.opcion_a, form.opcion_b, form.opcion_c, form.opcion_d, form.respuesta_correcta] %}
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                {{ field.label(class="block mb-2 text-sm font-medium text-gray-900 dark:text-white") }} {{ field(class="form-control w-full p-2 border border-black rounded") }}
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="max-w-sm mx-auto text-center">
+            {{ form.submit(class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700")
+            }}
+        </div>
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %} {% endwith %}
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

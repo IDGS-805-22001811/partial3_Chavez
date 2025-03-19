@@ -1,0 +1,53 @@
+{% extends "layaout.html" %} {% block container %}
+<div class="container mx-auto p-6">
+    <div class="max-w-md mx-auto text-center">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Calificaciones por Grupo</h2>
+    </div>
+
+    <form method="POST" action="{{ url_for('calificaciones') }}" class="max-w-md mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+        {{ form.csrf_token }}
+        <div class="mb-4">
+            <label for="{{ form.grupo.id }}" class="block text-sm font-medium text-gray-900 dark:text-white mb-1">Seleccionar Grupo:</label> {{ form.grupo(class="w-full px-3 py-2 border rounded-lg text-gray-900 dark:text-white dark:bg-gray-700") }} {%
+            if form.grupo.errors %}
+            <div class="mt-2 text-sm text-red-600">
+                {% for error in form.grupo.errors %} {{ error }} {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="w-full text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-800 dark:hover:bg-gray-700">
+                Ver Calificaciones
+            </button>
+        </div>
+    </form>
+
+    {% if calificaciones %}
+    <div class="max-w-2xl mx-auto mt-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Calificaciones del Grupo: {{ grupo_seleccionado }}</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left border-collapse border border-gray-300 dark:border-gray-700">
+                <thead class="bg-gray-200 dark:bg-gray-700">
+                    <tr class="text-gray-700 dark:text-white">
+                        <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Nombre del Alumno</th>
+                        <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Calificación</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800">
+                    {% for calificacion in calificaciones %}
+                    <tr class="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <td class="border border-gray-300 dark:border-gray-700 px-4 py-2">{{ calificacion.nombre_alumno }}</td>
+                        <td class="border border-gray-300 dark:border-gray-700 px-4 py-2">{{ calificacion.calificacion }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="max-w-md mx-auto mt-6 p-4 text-center text-sm text-gray-700 dark:text-white bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
+        No hay calificaciones para mostrar para el grupo seleccionado.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

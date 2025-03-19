@@ -1,0 +1,78 @@
+{% extends "layaout.html" %} {% block container %}
+<div class="container">
+    <div class="max-w-sm mx-auto">
+        <div class="mb-5">
+            <h2 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Realizar Examen</h2>
+        </div>
+    </div>
+
+    <form method="POST" action="{{ url_for('realizar_examen') }}" novalidate>
+        {{ form.csrf_token }}
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <div class="form-group">
+                    <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre:</label>
+                    <input type="text" name="nombre" class="form-control w-full p-2 border border-black rounded" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <div class="form-group">
+                    <label for="apellido_paterno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno:</label>
+                    <input type="text" name="apellido_paterno" class="form-control w-full p-2 border border-black rounded" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <button type="submit" name="buscar_alumno" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Buscar Alumno</button>
+            </div>
+        </div>
+    </form>
+
+    {% if alumno %}
+    <div class="max-w-sm mx-auto">
+        <div class="mb-5">
+            <h3>Alumno: {{ alumno.nombre }} {{ alumno.apellido_paterno }} {{ alumno.apellido_materno }}</h3>
+            <p>Grupo: {{ alumno.grupo }}</p>
+            <p>Edad: {{ edad }} años</p>
+        </div>
+    </div>
+
+    <form method="POST" action="{{ url_for('realizar_examen') }}" novalidate>
+        {{ form.csrf_token }} {% for pregunta in preguntas %}
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <div class="form-group">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ pregunta.pregunta }}</label>
+                    <div>
+                        <input type="radio" name="pregunta_{{ pregunta.id }}" value="A" required> {{ pregunta.opcion_a }}<br>
+                        <input type="radio" name="pregunta_{{ pregunta.id }}" value="B"> {{ pregunta.opcion_b }}<br>
+                        <input type="radio" name="pregunta_{{ pregunta.id }}" value="C"> {{ pregunta.opcion_c }}<br>
+                        <input type="radio" name="pregunta_{{ pregunta.id }}" value="D"> {{ pregunta.opcion_d }}<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <input type="hidden" name="alumno_id" value="{{ alumno.id }}">
+                <button type="submit" name="guardar_examen" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Guardar Examen</button>
+            </div>
+        </div>
+    </form>
+    {% endif %} {% if mensaje_error %}
+    <div class="max-w-sm mx-auto">
+        <div class="p-4 mb-5 text-white bg-red-500 border border-red-700 rounded-lg shadow-md">
+            {{ mensaje_error }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

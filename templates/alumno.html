@@ -1,0 +1,64 @@
+{% extends "layaout.html" %} {% block container %}
+
+
+<div class="container">
+    <div class="max-w-sm mx-auto">
+        <div class="mb-5">
+            <h2 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Registro de Alumno</h2>
+        </div>
+    </div>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre:</label> {{ form.nombre(size=30, class="w-full p-2 border border-black rounded") }}
+            </div>
+        </div>
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <label for="apellido_paterno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Paterno:</label> {{ form.apellido_paterno(size=30, class="w-full p-2 border border-black rounded") }}
+            </div>
+        </div>
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <label for="apellido_materno" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido Materno:</label> {{ form.apellido_materno(size=30, class="w-full p-2 border border-black rounded") }}
+            </div>
+        </div>
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <label for="fecha_nacimiento" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de Nacimiento:</label> {{ form.fecha_nacimiento(class="w-full p-2 border border-black rounded") }}
+            </div>
+        </div>
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <label for="grupo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grupo:</label> {{ form.grupo(class="w-full p-2 border border-black rounded") }}
+            </div>
+        </div>
+
+        <div class="max-w-sm mx-auto">
+            <div class="mb-5">
+                <button type="submit" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Registrar</button>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="max-w-sm mx-auto">
+        <div class="mb-5">
+            {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% endwith %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
