@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField,DateField
+from wtforms import StringField, SubmitField, SelectField,DateField,PasswordField
 from wtforms.validators import DataRequired
 
 class AlumnoForm(FlaskForm):
@@ -24,3 +24,7 @@ class GrupoForm(FlaskForm):
     
 class TuFormulario(FlaskForm):
     grupo = SelectField("Grupo", choices=[("A", "Grupo A"), ("B", "Grupo B")])  
+    
+class LoginForm(FlaskForm):
+    username = StringField('Nombre de usuario', validators=[DataRequired()])
+    password = PasswordField('Contraseña', validators=[DataRequired()])

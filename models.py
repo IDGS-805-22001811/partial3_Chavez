@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_login import UserMixin
 db = SQLAlchemy()
 
 class Alumno(db.Model):
@@ -29,3 +29,15 @@ class Respuesta(db.Model):
     alumno_id = db.Column(db.Integer, db.ForeignKey('alumnos.id'))  
     pregunta_id = db.Column(db.Integer, db.ForeignKey('preguntas.id'))  
     respuesta_alumno = db.Column(db.String(1))
+    
+class User(UserMixin):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+# Base de datos simulada de usuarios (puedes cambiar esto por SQLAlchemy)
+users = {
+    "admin": User(id=1, username="admin", password="1234"),
+    "user": User(id=2, username="user", password="password"),
+}

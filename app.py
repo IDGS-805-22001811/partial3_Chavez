@@ -1,14 +1,46 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_wtf.csrf import CSRFProtect
 from config import DevelopmentConfig
-from models import db,Alumno,Pregunta,Respuesta
+from models import db,Alumno,Pregunta,Respuesta,users
 import forms,datetime
-from forms import AlumnoForm, PreguntaForm,GrupoForm,TuFormulario
+from forms import AlumnoForm, PreguntaForm,GrupoForm,TuFormulario,LoginForm
 from flask import flash
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
+app.config['SECRET_KEY'] = 'si'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@localhost/examen'
 csrf = CSRFProtect()
+
+login_manager = LoginManager(app)  
+login_manager.login_view = 'login'  
+
+@login_manager.user_loader
+def load_user(user_id):
+    return users.get(user_id)  
+
+@app.route("/", methods=["GET", "POST"])
+def login():
+    form = LoginForm()  
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        user = users.get(username)
+        if user and user.password == password:
+            login_user(user)
+            return redirect(url_for("index"))
+
+    return render_template("login.html", form=form)
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
+
 
 @app.errorhandler(404)
 def page_not_found(e):
